@@ -1,7 +1,15 @@
 import express from "express"
+import userHandler from "./user.http"
+import validate from "../../middlewares/validate";
+import { loginSchema, registerSchema } from "./user.validate";
+import { verifyToken } from "../../middlewares/verifyToken";
 
 const router = express.Router();
 
-router.post('/login', )
+router.post('/login', validate(loginSchema), userHandler.login)
+
+router.get('/info', [verifyToken], userHandler.info);
+
+router.post('/register', [validate(registerSchema)], userHandler.register);
 
 export = router;

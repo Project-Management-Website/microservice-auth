@@ -6,22 +6,29 @@ export interface IJwtData {
     username: string;
   }
 
-export interface IUser extends Document {
+export interface IUser {
     uuid: string;
     username: string;
-    email: string;
+    email?: string;
     password: string;
     created_at: Date;
+}
+
+export interface IUserModel extends IUser, Document {
     comparePassword(candidatePassword: string): Promise<boolean>
 }
 
-const UserSchema: Schema<IUser> = new Schema(
+const UserSchema: Schema<IUserModel> = new Schema(
     {
         uuid: { type: String, unique: true },
         username: { type: String },
         email: { type: String },
         password: { type: String },
         created_at: { type: Date, default: Date.now }
+    },
+    {
+        versionKey: false,
+        timestamps: false,
     }
 )
 
@@ -34,4 +41,4 @@ UserSchema.method<HydratedDocument<IUser>>(
 
 UserSchema.index({ uuid: 1 });
 
-export default mongoose.model<IUser>('user', UserSchema)
+export default mongoose.model<IUserModel>('user', UserSchema)

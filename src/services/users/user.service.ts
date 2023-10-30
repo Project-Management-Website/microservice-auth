@@ -1,12 +1,14 @@
 import { FilterQuery, ProjectionType, QueryOptions } from "mongoose";
-import userModel, { IUser } from "./user.model";
+import userModel, { IUser, IUserModel } from "./user.model";
 import createHttpError from "http-errors";
+import bcrypt from "bcrypt";
+import { checkMongoErr } from "../../helpers/catchError.helper";
 
 export async function getUser(
     conditions: FilterQuery<IUser>,
     select: ProjectionType<IUser> = {},
     options: QueryOptions = { lean: true }
-): Promise<IUser | null> {
+): Promise<IUserModel | null> {
     const query: FilterQuery<IUser> = {
         ...conditions,
       };
@@ -18,6 +20,31 @@ export async function getUser(
         }
         return user;
       } catch (err) {
-        throw createHttpError(err as Error);
+        throw checkMongoErr(err as Error);
       }
+}
+
+export async function createUser(input: IUser): Promise<IUser> {
+  try {
+    input.password = bcrypt.hashSync(input.password || '', bcrypt.genSaltSync(10, 'b'));
+    const newUser = await userModel.create(input);
+    return newUser;
+  } catch (err) {
+    throw checkMongoErr(err as Error);
+  }
+}
+
+export async function countUser(
+  conditions: FilterQuery<IUserModel>
+): Promise<number> {
+  const query: FilterQuery<IUserModel> = {
+    ...conditions,
+  };
+
+  try {
+    const result = await userModel.countDocuments(query);
+    return result || 0;
+  } catch (err) {
+    throw checkMongoErr(err as Error);
+  }
 }
