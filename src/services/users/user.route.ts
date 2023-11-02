@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/login', validate(loginSchema), userHandler.login)
 
-router.get('/info', [verifyToken], userHandler.info);
+router.get('/info/:id', verifyToken, userHandler.info);
 
 router.post('/register', [validate(registerSchema)], userHandler.register);
 

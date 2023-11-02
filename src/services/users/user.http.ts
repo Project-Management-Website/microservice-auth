@@ -1,4 +1,4 @@
-import { NextFunction, Request } from "express";
+import { NextFunction, Request, Response } from "express";
 import { GetUserInput, LoginInput, RegisterInput } from "./user.validate";
 import { countUser, createUser, getUser } from "./user.service";
 import createHttpError from "http-errors";
@@ -8,7 +8,7 @@ import { appSignJWT } from "../../helpers/auth.helper";
 
 const login = async (
     req: Request<never, never, LoginInput['body']>,
-    res: any,
+    res: Response,
     next: NextFunction,
 ) => {
     try {
@@ -41,9 +41,11 @@ const login = async (
       
         const token: string = appSignJWT(jwtData)
 
+        res.cookie('jwt', token, {
+            httpOnly: true,
+        });
         res.status(200).json({
             message: 'Login success',
-            data: token,
         });
 
     } catch (err) {
@@ -89,6 +91,7 @@ export const info = async (
     next: NextFunction
 ) => {
     try {
+        console.log(req.params.id)
         const user = await getUser(
             {
                 uuid: req.params.id
@@ -100,7 +103,12 @@ export const info = async (
                 created_at: 1,
             }
         )
-            
+        if (!user) {
+            throw new createHttpError.NotFound('User not found');
+        }
+        res.status(200).json({
+            user,
+        })
     } catch (err) {
         next(err);
     }

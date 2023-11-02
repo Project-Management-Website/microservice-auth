@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { verifyJwt } from '../lib/jwt.lib';
 import * as dotenv from 'dotenv'
+import createHttpError from 'http-errors';
 
 export const verifyToken = async (
   req: Request,
@@ -9,9 +10,11 @@ export const verifyToken = async (
 ) => {
   try {
     dotenv.config();
-    const accessToken = req.headers['x-token'];
+    const accessToken = req.cookies.jwt;
+    
+    console.log(accessToken)
     if (!accessToken) {
-      return next();
+      throw new createHttpError[401];
     }
 
     const { decoded } = verifyJwt(
