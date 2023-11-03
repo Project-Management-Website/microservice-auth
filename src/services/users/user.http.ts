@@ -24,7 +24,7 @@ const login = async (
         if (!user) {
             throw new createHttpError.BadRequest(
                 'Sorry, you have entered an invalid username and/or password'
-            );
+              );
         }
 
         const passwordIsMatch = await user.comparePassword(req.body.password);

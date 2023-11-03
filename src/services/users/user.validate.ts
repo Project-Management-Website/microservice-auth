@@ -4,10 +4,10 @@ const loginPayload = {
   body: object({
     username: string({
       required_error: 'username is required',
-    }),
+    }).min(1, 'Sorry, you have entered an invalid username and/or password'),
     password: string({
       required_error: 'password is required',
-    }),
+    }).min(6, 'Sorry, you have entered an invalid username and/or password'),
   }),
 };
 

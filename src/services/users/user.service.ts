@@ -1,6 +1,6 @@
 import { FilterQuery, ProjectionType, QueryOptions } from "mongoose";
 import userModel, { IUser, IUserModel } from "./user.model";
-import createHttpError from "http-errors";
+import createError from "http-errors";
 import bcrypt from "bcrypt";
 import { checkMongoErr } from "../../helpers/catchError.helper";
 
@@ -16,7 +16,7 @@ export async function getUser(
       try {
         const user = await userModel.findOne(query, select, options);
         if (!user) {
-          throw new createHttpError.NotFound('User not found');
+          // throw new createError.NotFound('User not found');
         }
         return user;
       } catch (err) {
