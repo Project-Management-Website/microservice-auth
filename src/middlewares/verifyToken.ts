@@ -10,7 +10,7 @@ export const verifyToken = async (
 ) => {
   try {
     dotenv.config();
-    const accessToken = req.cookies.jwt;
+    const accessToken = req.headers['jwt-token']
     
     console.log(accessToken)
     if (!accessToken) {

@@ -6,15 +6,13 @@ import { HttpError } from 'http-errors';
 
 export function createServer() :Expression {
     const app = express();
-    app.use(cookieParser())
     app.use(express.json())
 
     app.use((req, res, next) => {
-        res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-        res.header('Access-Control-Allow-Credentials', 'true');
+        res.header('Access-Control-Allow-Origin', '*');
         res.header(
           'Access-Control-Allow-Headers',
-          'Origin, X-Requested-With, Content-Type, Accept, Authorization, x-token'
+          'Origin, X-Requested-With, Content-Type, Accept, Authorization, jwt-token'
         );
     
         if (req.method == 'OPTIONS') {

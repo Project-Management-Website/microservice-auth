@@ -41,11 +41,9 @@ const login = async (
       
         const token: string = appSignJWT(jwtData)
 
-        res.cookie('jwt', token, {
-            httpOnly: true,
-        });
         res.status(200).json({
             message: 'Login success',
+            token,
         });
 
     } catch (err) {
