@@ -1,5 +1,5 @@
 import mongo from "./lib/mongoose.lib";
-import { createServer } from "./server";
+import { createGrpcServer, createServer } from "./server";
 import * as dotenv from "dotenv"
 
 async function init(): Promise<void> {
@@ -13,6 +13,10 @@ async function init(): Promise<void> {
     createServer().listen(port, () => {
       console.log(`Listening on port ${port}`);
     });
+
+    const grpcPort = process.env.GRPC_PORT;
+    createGrpcServer(grpcPort as string);
+    
   } catch (err) {
     console.log('Connect failed');
     return;

@@ -14,7 +14,7 @@ export const verifyToken = async (
     
     console.log(accessToken)
     if (!accessToken) {
-      throw new createHttpError[401];
+      next(createHttpError[401]);
     }
 
     const { decoded } = verifyJwt(

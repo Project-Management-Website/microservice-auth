@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package services.user.v1;
+
+service User {
+    rpc Auth(AuthRequest) returns (AuthResponse);
+}
+
+message AuthRequest {
+    string token = 1;
+}
+
+message AuthResponse {
+    string uuid = 1;
+    string username = 2;
+}
+

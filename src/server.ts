@@ -3,6 +3,9 @@ import express, { NextFunction, Request, Response } from "express"
 import { createRoute } from "./routes";
 import cookieParser from "cookie-parser";
 import { HttpError } from 'http-errors';
+import { Server, ServerCredentials } from "@grpc/grpc-js";
+import { UserService } from "./proto/user/user_service_grpc_pb";
+import { UserServer } from "./services/users/user.grpcServer";
 
 export function createServer() :Expression {
     const app = express();
@@ -45,4 +48,16 @@ export function createServer() :Expression {
   
 
     return app;
+}
+
+export function createGrpcServer(port: string) {
+  const server = new Server();
+
+  server.addService(UserService, new UserServer());
+  const uri = `0.0.0.0:${port}`;
+  server.bindAsync(uri, ServerCredentials.createInsecure(), () => {
+    server.start();
+
+    console.log(`gRPC server listening on port ${port}`);
+  })
 }
