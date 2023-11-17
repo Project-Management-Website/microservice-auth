@@ -4,13 +4,14 @@ import bcrypt from "bcrypt"
 export interface IJwtData {
     uuid: string;
     username: string;
-  }
+}
 
 export interface IUser {
     uuid: string;
     username: string;
     email?: string;
     password: string;
+    permissions: string[];
     created_at: Date;
 }
 
@@ -24,6 +25,7 @@ const UserSchema: Schema<IUserModel> = new Schema(
         username: { type: String },
         email: { type: String },
         password: { type: String },
+        permissions: { type: [String] },
         created_at: { type: Date, default: Date.now }
     },
     {

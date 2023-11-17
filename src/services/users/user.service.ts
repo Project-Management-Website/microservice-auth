@@ -24,6 +24,26 @@ export async function getUser(
       }
 }
 
+export async function getUsers(
+  conditions: FilterQuery<IUser>,
+  select: ProjectionType<IUser> = {},
+  options: QueryOptions = { lean: true }
+) {
+  const query: FilterQuery<IUser> = {
+    ...conditions,
+  };
+
+  try {
+    const user = await userModel.find(query, select, options);
+    if (!user) {
+      // throw new createError.NotFound('User not found');
+    }
+    return user;
+  } catch (err) {
+    throw checkMongoErr(err as Error);
+  }
+}
+
 export async function createUser(input: IUser): Promise<IUser> {
   try {
     input.password = bcrypt.hashSync(input.password || '', bcrypt.genSaltSync(10, 'b'));

@@ -12,7 +12,6 @@ export const verifyToken = async (
     dotenv.config();
     const accessToken = req.headers['jwt-token']
     
-    console.log(accessToken)
     if (!accessToken) {
       next(createHttpError[401]);
     }

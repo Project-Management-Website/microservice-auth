@@ -10,6 +10,8 @@ router.post('/login', validate(loginSchema), userHandler.login)
 
 router.get('/info/:id', verifyToken, userHandler.info);
 
+router.get('/list', verifyToken, userHandler.list);
+
 router.post('/register', [validate(registerSchema)], userHandler.register);
 
 export = router;

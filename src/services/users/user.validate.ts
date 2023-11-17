@@ -1,4 +1,4 @@
-import z, { object, string, TypeOf } from 'zod';
+import z, { array, object, string, TypeOf } from 'zod';
 
 const loginPayload = {
   body: object({
@@ -23,6 +23,7 @@ const registerPayload = {
       required_error: 'confirm password is required',
     }).min(6),
     email: string().optional(),
+    permissions: string().array(),
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.confirm_password) {

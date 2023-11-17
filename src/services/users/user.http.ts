@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { GetUserInput, LoginInput, RegisterInput } from "./user.validate";
-import { countUser, createUser, getUser } from "./user.service";
+import { countUser, createUser, getUser, getUsers } from "./user.service";
 import createHttpError from "http-errors";
 import { v4 } from "uuid"
 import { IJwtData, IUser } from "./user.model";
@@ -17,6 +17,7 @@ const login = async (
             {
                 username: 1,
                 password: 1,
+                permissions: 1,
                 uuid: 1,
             },
             { lean: false, }
@@ -44,6 +45,8 @@ const login = async (
         res.status(200).json({
             message: 'Login success',
             token,
+            uuid: user.uuid,
+            permissions: user.permissions,
         });
 
     } catch (err) {
@@ -83,13 +86,13 @@ const register = async (
     }
 }
 
-export const info = async (
+const info = async (
     req: Request<GetUserInput['params']>,
     res: any,
     next: NextFunction
 ) => {
     try {
-        console.log(req.params.id)
+
         const user = await getUser(
             {
                 uuid: req.params.id
@@ -105,6 +108,7 @@ export const info = async (
             throw new createHttpError.NotFound('User not found');
         }
         res.status(200).json({
+            message: 'success',
             user,
         })
     } catch (err) {
@@ -112,8 +116,37 @@ export const info = async (
     }
 }
 
+const list = async (
+    req: Request,
+    res: any,
+    next: NextFunction
+) => {
+    try {
+        const conditions = '';
+
+        const items = await getUsers(
+            {
+
+            },
+            {
+                _id: 0,
+                uuid: 1,
+                username: 1,
+            }
+        )
+        res.status(200).json({
+            message: 'success',
+            items,
+        })
+    
+    } catch (err) {
+        next(err)
+    }
+}
+
 export default {
     login,
     register,
     info,
+    list,
 }
