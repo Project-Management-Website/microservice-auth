@@ -22,7 +22,7 @@ const registerPayload = {
     confirm_password: string({
       required_error: 'confirm password is required',
     }).min(6),
-    email: string().optional(),
+    email: string(),
     permissions: string().array(),
   })
   .superRefine((data, ctx) => {

@@ -46,6 +46,7 @@ const login = async (
             message: 'Login success',
             token,
             uuid: user.uuid,
+            username: user.username,
             permissions: user.permissions,
         });
 

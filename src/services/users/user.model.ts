@@ -9,7 +9,7 @@ export interface IJwtData {
 export interface IUser {
     uuid: string;
     username: string;
-    email?: string;
+    email: string;
     password: string;
     permissions: string[];
     created_at: Date;

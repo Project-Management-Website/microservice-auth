@@ -4,6 +4,7 @@ package services.user.v1;
 
 service User {
     rpc Auth(AuthRequest) returns (AuthResponse);
+    rpc getUser(GetUserRequest) returns (GetUserResponse);
 }
 
 message AuthRequest {
@@ -15,3 +16,13 @@ message AuthResponse {
     string username = 2;
 }
 
+message GetUserRequest {
+    string uuid = 1;
+}
+
+message GetUserResponse {
+    string uuid = 1;
+    string username = 2;
+    string email = 3;
+    repeated string permissions = 4;
+}
