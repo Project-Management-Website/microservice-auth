@@ -32,11 +32,6 @@ const registerPayload = {
         message: 'Password and Confirm Password must match',
         path: ['password'],
       });
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Password and Confirm Password must match',
-        path: ['confirmPassword'],
-      });
     }
   })
 }
