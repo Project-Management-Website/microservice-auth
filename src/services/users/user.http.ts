@@ -17,7 +17,7 @@ const login = async (
             {
                 username: 1,
                 password: 1,
-                permissions: 1,
+                roles: 1,
                 uuid: 1,
             },
             { lean: false, }
@@ -47,7 +47,7 @@ const login = async (
             token,
             uuid: user.uuid,
             username: user.username,
-            permissions: user.permissions,
+            roles: user.roles,
         });
 
     } catch (err) {
@@ -72,6 +72,7 @@ const register = async (
         const newUserData: IUser = {
             uuid: v4(),
             ...req.body,
+            roles: 'member',
             created_at: new Date()
         };
 

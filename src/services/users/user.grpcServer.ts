@@ -27,6 +27,7 @@ export class UserServer implements IUserServer {
                 {
                     uuid: 1,
                     username: 1,
+                    roles: 1,
                 }
             );
             if (!user) {
@@ -35,6 +36,7 @@ export class UserServer implements IUserServer {
             const res = new AuthResponse();
             res.setUuid(user.uuid);
             res.setUsername(user.username);
+            res.setRole(user.roles || "")
 
             callback(null, res);
 
@@ -66,7 +68,7 @@ export class UserServer implements IUserServer {
                     uuid: 1,
                     username: 1,
                     email: 1,
-                    permissions: 1,
+                    roles: 1,
                 }
             )
             if(!user) {
@@ -77,7 +79,7 @@ export class UserServer implements IUserServer {
             resp.setUuid(user.uuid);
             resp.setUsername(user.username)
             resp.setEmail(user.email);
-            resp.setPermissionsList(user.permissions)
+            resp.setRole(user.roles || "")
 
             callback(null, resp);
         } catch (err) {

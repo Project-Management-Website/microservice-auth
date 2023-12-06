@@ -11,7 +11,7 @@ export interface IUser {
     username: string;
     email: string;
     password: string;
-    permissions: string[];
+    roles?: string;
     created_at: Date;
 }
 
@@ -25,8 +25,8 @@ const UserSchema: Schema<IUserModel> = new Schema(
         username: { type: String },
         email: { type: String },
         password: { type: String },
-        permissions: { type: [String] },
-        created_at: { type: Date, default: Date.now }
+        roles: { type: String },
+        created_at: { type: Date, default: Date.now() }
     },
     {
         versionKey: false,

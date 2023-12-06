@@ -31,6 +31,8 @@ export class AuthResponse extends jspb.Message {
     setUuid(value: string): AuthResponse;
     getUsername(): string;
     setUsername(value: string): AuthResponse;
+    getRole(): string;
+    setRole(value: string): AuthResponse;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): AuthResponse.AsObject;
@@ -46,6 +48,7 @@ export namespace AuthResponse {
     export type AsObject = {
         uuid: string,
         username: string,
+        role: string,
     }
 }
 
@@ -76,10 +79,8 @@ export class GetUserResponse extends jspb.Message {
     setUsername(value: string): GetUserResponse;
     getEmail(): string;
     setEmail(value: string): GetUserResponse;
-    clearPermissionsList(): void;
-    getPermissionsList(): Array<string>;
-    setPermissionsList(value: Array<string>): GetUserResponse;
-    addPermissions(value: string, index?: number): string;
+    getRole(): string;
+    setRole(value: string): GetUserResponse;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetUserResponse.AsObject;
@@ -96,6 +97,6 @@ export namespace GetUserResponse {
         uuid: string,
         username: string,
         email: string,
-        permissionsList: Array<string>,
+        role: string,
     }
 }

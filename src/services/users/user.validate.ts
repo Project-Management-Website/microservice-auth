@@ -23,7 +23,7 @@ const registerPayload = {
       required_error: 'confirm password is required',
     }).min(6),
     email: string(),
-    permissions: string().array(),
+    role: string().optional(),
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.confirm_password) {

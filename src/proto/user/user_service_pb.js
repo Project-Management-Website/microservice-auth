@@ -90,7 +90,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.services.user.v1.GetUserResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.services.user.v1.GetUserResponse.repeatedFields_, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.services.user.v1.GetUserResponse, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -263,7 +263,8 @@ proto.services.user.v1.AuthResponse.prototype.toObject = function(opt_includeIns
 proto.services.user.v1.AuthResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     uuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    username: jspb.Message.getFieldWithDefault(msg, 2, "")
+    username: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    role: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -308,6 +309,10 @@ proto.services.user.v1.AuthResponse.deserializeBinaryFromReader = function(msg, 
       var value = /** @type {string} */ (reader.readString());
       msg.setUsername(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setRole(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -351,6 +356,13 @@ proto.services.user.v1.AuthResponse.serializeBinaryToWriter = function(message, 
       f
     );
   }
+  f = message.getRole();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -387,6 +399,24 @@ proto.services.user.v1.AuthResponse.prototype.getUsername = function() {
  */
 proto.services.user.v1.AuthResponse.prototype.setUsername = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string role = 3;
+ * @return {string}
+ */
+proto.services.user.v1.AuthResponse.prototype.getRole = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.services.user.v1.AuthResponse} returns this
+ */
+proto.services.user.v1.AuthResponse.prototype.setRole = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -521,13 +551,6 @@ proto.services.user.v1.GetUserRequest.prototype.setUuid = function(value) {
 
 
 
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.services.user.v1.GetUserResponse.repeatedFields_ = [4];
-
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -562,7 +585,7 @@ proto.services.user.v1.GetUserResponse.toObject = function(includeInstance, msg)
     uuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
     username: jspb.Message.getFieldWithDefault(msg, 2, ""),
     email: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    permissionsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f
+    role: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -613,7 +636,7 @@ proto.services.user.v1.GetUserResponse.deserializeBinaryFromReader = function(ms
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.addPermissions(value);
+      msg.setRole(value);
       break;
     default:
       reader.skipField();
@@ -665,9 +688,9 @@ proto.services.user.v1.GetUserResponse.serializeBinaryToWriter = function(messag
       f
     );
   }
-  f = message.getPermissionsList();
+  f = message.getRole();
   if (f.length > 0) {
-    writer.writeRepeatedString(
+    writer.writeString(
       4,
       f
     );
@@ -730,39 +753,20 @@ proto.services.user.v1.GetUserResponse.prototype.setEmail = function(value) {
 
 
 /**
- * repeated string permissions = 4;
- * @return {!Array<string>}
+ * optional string role = 4;
+ * @return {string}
  */
-proto.services.user.v1.GetUserResponse.prototype.getPermissionsList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 4));
-};
-
-
-/**
- * @param {!Array<string>} value
- * @return {!proto.services.user.v1.GetUserResponse} returns this
- */
-proto.services.user.v1.GetUserResponse.prototype.setPermissionsList = function(value) {
-  return jspb.Message.setField(this, 4, value || []);
+proto.services.user.v1.GetUserResponse.prototype.getRole = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
 
 /**
  * @param {string} value
- * @param {number=} opt_index
  * @return {!proto.services.user.v1.GetUserResponse} returns this
  */
-proto.services.user.v1.GetUserResponse.prototype.addPermissions = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 4, value, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
- * @return {!proto.services.user.v1.GetUserResponse} returns this
- */
-proto.services.user.v1.GetUserResponse.prototype.clearPermissionsList = function() {
-  return this.setPermissionsList([]);
+proto.services.user.v1.GetUserResponse.prototype.setRole = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
