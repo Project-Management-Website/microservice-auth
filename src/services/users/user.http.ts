@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Locals, NextFunction, Request, Response } from "express";
 import { GetUserInput, LoginInput, RegisterInput } from "./user.validate";
 import { countUser, createUser, getUser, getUsers } from "./user.service";
 import createHttpError from "http-errors";
@@ -57,7 +57,7 @@ const login = async (
 
 const register = async (
     req: Request<never, never, RegisterInput['body']>,
-    res: any,
+    res: Response,
     next: NextFunction
 ) => {
     try {
@@ -90,18 +90,20 @@ const register = async (
 
 const info = async (
     req: Request<GetUserInput['params']>,
-    res: any,
+    res: Response,
     next: NextFunction
 ) => {
     try {
-
+        const userUuid = res.locals.user.user.uuid
+        console.log(userUuid)
         const user = await getUser(
             {
-                uuid: req.params.id
+                uuid: userUuid,
             },
             {
                 uuid: 1,
                 username: 1,
+                roles: 1,
                 email: 1,
                 created_at: 1,
             }
@@ -120,10 +122,11 @@ const info = async (
 
 const list = async (
     req: Request,
-    res: any,
+    res: Response,
     next: NextFunction
 ) => {
     try {
+        
         const conditions = '';
 
         const items = await getUsers(
@@ -131,7 +134,6 @@ const list = async (
 
             },
             {
-                _id: 0,
                 uuid: 1,
                 username: 1,
             }

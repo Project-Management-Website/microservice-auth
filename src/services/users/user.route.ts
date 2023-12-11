@@ -3,6 +3,7 @@ import userHandler from "./user.http"
 import validate from "../../middlewares/validate";
 import { loginSchema, registerSchema } from "./user.validate";
 import { verifyToken } from "../../middlewares/verifyToken";
+import requireUser from "../../middlewares/requiredUser";
 
 const router = express.Router();
 

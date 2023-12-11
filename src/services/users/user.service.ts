@@ -16,7 +16,7 @@ export async function getUser(
       try {
         const user = await userModel.findOne(query, select, options);
         if (!user) {
-          // throw new createError.NotFound('User not found');
+          throw new createError.NotFound('User not found');
         }
         return user;
       } catch (err) {
